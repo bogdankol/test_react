@@ -1,0 +1,44 @@
+@keyframes loader {
+    0% {
+        transform: translateX(0) rotate(0deg);
+    }
+    10% {
+        transform: translateX(10vw) rotate(360deg);
+    }
+    20% {
+        transform: translateX(20vw) rotate(720deg);
+    }
+    30% {
+        transform: translateX(30vw) rotate(1080deg);
+    }
+    40%{
+        transform: translateX(40vw) rotate(1440deg);
+    }
+    50% {
+        transform: translateX(50vw) rotate(1800deg);
+    }
+    60% {
+        transform: translateX(60vw) rotate(2160deg);
+    }
+    70% {
+        transform: translateX(70vw) rotate(2520deg);
+    }
+    80% {
+        transform: translateX(80vw) rotate(2880deg);
+    }
+    90% {
+        transform: translateX(90vw) rotate(3240deg);
+    }
+    100% {
+        transform: translateX(100vw) rotate(3600deg);
+    }
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    animation-name: loader;
+    animation-duration: 10000ms;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}

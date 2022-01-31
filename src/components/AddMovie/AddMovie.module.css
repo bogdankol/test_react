@@ -1,0 +1,52 @@
+.mainDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+}
+.form input{
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 10px 0;
+    width: 100%;
+    height: 25px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+.list {
+    list-style: none;
+}
+.listItem {
+    display: flex;
+}
+.listItem h4 {
+    padding: 0;
+    margin: 0 0 0 5px;
+}
+.newFilmDiv {
+    margin: 30px 0;
+    border: 1px solid transparent;
+    background-color: rgba(0, 133, 0, 0.459);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.btn {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: transform 250ms linear;
+}
+.btn:hover,
+.btn:focus {
+    transform: scale(1.1);
+    background: rgba(79, 197, 248, 0.363);
+}

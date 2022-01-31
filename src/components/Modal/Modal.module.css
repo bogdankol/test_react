@@ -1,0 +1,84 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 20;
+}
+.modal {
+    width: 500px;
+    padding: 15px 25px;
+    box-sizing: border-box;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 0;
+}
+.listItem {
+    margin: 5px 10px;
+}
+.leftDiv {
+    border-right: 1px solid black;
+    padding: 0 15px 0 0;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.modalSecond {
+    width: 600px;
+    padding: 15px 25px;
+    box-sizing: border-box;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
+.rightDiv {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    flex-direction: column;
+    padding: 0 0 0 15px;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0 0 0;
+    width: 100%;
+}
+.form input{
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 10px 0;
+    width: 100%;
+    height: 25px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.btn {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    transform: scale(0.9);
+    transition: transform 250ms linear;
+}
+.btn:hover,
+.btn:focus {
+    transform: scale(1);
+    background: rgba(79, 197, 248, 0.363);
+}
