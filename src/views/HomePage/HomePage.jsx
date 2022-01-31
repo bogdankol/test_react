@@ -1,7 +1,4 @@
 import {useState, useRef} from 'react';
-import axios from 'axios';
-import {authOperations} from '../../redux/auth';
-import {useDispatch} from 'react-redux';
 import RegistrationForm from '../../components/RegistrationForm';
 import LoginForm from '../../components/LoginForm';
 import s from './HomePage.module.css';

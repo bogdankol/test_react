@@ -1,7 +1,6 @@
 import React from "react";
 import s from "./RegistrationForm.module.css";
 import { useState, useRef } from "react";
-import axios from "axios";
 import { authOperations } from "../../redux/auth";
 import { useDispatch } from "react-redux";
 

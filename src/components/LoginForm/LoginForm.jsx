@@ -1,7 +1,6 @@
 import React from 'react';
 import s from './LoginForm.module.css';
 import {useState, useRef} from 'react';
-import axios from 'axios';
 import {authOperations} from '../../redux/auth';
 import {useDispatch} from 'react-redux';
 

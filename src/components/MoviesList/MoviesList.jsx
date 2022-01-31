@@ -1,5 +1,4 @@
-import {useState, useEffect, useRef} from 'react';
-import axios from 'axios';
+import {useState, useEffect} from 'react';
 import {authOperations} from '../../redux/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {authSelectors} from '../../redux/auth';

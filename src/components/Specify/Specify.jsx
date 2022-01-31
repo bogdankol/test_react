@@ -12,7 +12,6 @@ function Specify() {
     const [modalNeeded, setModalNeeded] = useState(false)
     const [editModal, setEditModal] = useState(false)
     const [filmInfoData, setFilmInfoData] = useState()
-    const [edited, setEdited] = useState(false)
     const foundFilms = useSelector(authSelectors.getFoundFilms)
     const dispatch = useDispatch();
 

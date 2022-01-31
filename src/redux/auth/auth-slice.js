@@ -34,9 +34,11 @@ const authSlice = createSlice({
       state.isFetchingUser = true;
     },
     [authOperations.logIn.fulfilled]: (state, { payload }) => {
-      state.token = payload;
-      state.isFetchingUser = false;
-      state.isLoggedIn = true;
+      if(payload) {
+        state.token = payload;
+        state.isFetchingUser = false;
+        state.isLoggedIn = true;
+      } 
     },
     [authOperations.logIn.rejected]: (state, { payload }) => {
       state.error = payload;

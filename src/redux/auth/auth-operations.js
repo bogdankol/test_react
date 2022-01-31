@@ -1,8 +1,5 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-// axios.defaults.baseURL = "https://kapusta-api-iteam.herokuapp.com/api";
-// axios.defaults.baseURL = 'http://localhost:5000/api';
-
 
 const token = {
   set(token) {
@@ -25,12 +22,8 @@ const registration = createAsyncThunk(
       });
 
       if(data.status === 1) {
-        console.log(data.token)
         if (data.token) {
           token.set(data.token)
-          alert(
-            'Login successful! Please proceed!',
-          );
           return data.token;
         };
       } 
@@ -56,9 +49,6 @@ const logIn = createAsyncThunk(
       if(data.status === 1) {
         if (data.token) {
           token.set(data.token)
-          alert(
-            'Login successful! Please proceed!',
-          );
           return data.token;
         };
       } 
@@ -104,7 +94,6 @@ const createFilm = createAsyncThunk('auth/createFilm', async ({title, year, form
 const deleteFilm = createAsyncThunk('auth/deleteFilm', async (id, thunkAPI) => {
   try {
        const {data} = await axios.delete(`http://localhost:8000/api/v1/movies/${id}`);
-        console.log(data)
        if(data.status === 1) {
         return id;
        } 
@@ -142,14 +131,12 @@ const deleteFilm = createAsyncThunk('auth/deleteFilm', async (id, thunkAPI) => {
  });
 
  const patchFilm = createAsyncThunk('auth/patchFilm', async ({id, dataToPatch}, thunkAPI) => {
-  console.log(`patchFilm:`, id, dataToPatch)
   try {
        const {data} = await axios.patch(`http://localhost:8000/api/v1/movies/${id}`, dataToPatch);
-       console.log(`patchFilm:`, id, dataToPatch)
        if(data.status === 1) {
          if (data.data) {
            alert(
-             'patched film!',
+             'edited film!',
            );
            return data.data;
          };

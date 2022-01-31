@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import s from "./Modal.module.css";
 import { createPortal } from "react-dom";
-import { nanoid } from "nanoid";
-import axios from "axios";
 import {authOperations} from '../../redux/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {authSelectors} from '../../redux/auth';

@@ -1,6 +1,5 @@
 import './App.css';
-import axios from 'axios';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {authSelectors} from './redux/auth';
 import {
@@ -9,7 +8,6 @@ import {
   Navigate,
   useNavigate,
 } from 'react-router-dom';
-import Loader from './components/Loader';
 import HomePage from './views/HomePage';
 import UserPage from './views/UserPage';
 import AddMovie from './components/AddMovie/AddMovie';
@@ -20,12 +18,10 @@ import Specify from './components/Specify/Specify';
 function App() {
   const navigate = useNavigate();
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn)
-  const getToken = useSelector(authSelectors.getToken)
-  console.log(isLoggedIn)
+  // const getToken = useSelector(authSelectors.getToken)
 
   useEffect(() => {
 
-    console.log(`useEffect:`, isLoggedIn)
     if (isLoggedIn) {
       navigate('/userPage');
 
