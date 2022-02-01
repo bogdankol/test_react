@@ -2,6 +2,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import {authOperations} from '../../redux/auth';
 import {useDispatch} from 'react-redux';
+import s from './UserPage.module.css';
 
 function UserPage() {
     // const [file, setFile] = useState(null);
@@ -13,9 +14,9 @@ function UserPage() {
     //     const result = await axios.post(`http://localhost:8000/api/v1/movies/import`, movies)
     // }
 
-  return <div>
+  return <div className={s.mainDiv}>
      
-      Choose what do you want to do
+      <h2>Choose what do you want to do</h2>
       {/* <form onSubmit={onFileSubmit}>
           <input type="file" onChange={(e) => setFile(e.target.files[0])}></input>
           <button type="submit">send file</button>

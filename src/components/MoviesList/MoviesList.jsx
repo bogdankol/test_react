@@ -47,7 +47,7 @@ function MoviesList() {
     }
 
   return <div className={s.mainDiv}>
-      Here you can see all your created movies.
+      <h2>Here you can see all your created movies.</h2>
       {userFilms.length > 0 && 
       <ul className={s.list}>
           {userFilms.map(el => <li key={el.title} className={s.listItem} id={el.id} onClick={onDetailsClick}>
