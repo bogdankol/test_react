@@ -1,29 +1,39 @@
 import {useState, useEffect} from 'react';
 import {authOperations} from '../../redux/auth';
 import {useDispatch, useSelector} from 'react-redux';
+import {useLocation} from 'react-router-dom';
 import {authSelectors} from '../../redux/auth';
 import Modal from '../Modal';
 import s from './MoviesList.module.css';
+import DeleteModal from '../DeleteModal/DeleteModal';
 
 function MoviesList() {
     const dispatch = useDispatch();
     const userFilms = useSelector(authSelectors.getFilms)
     const [filmInfoModal, setFilmInfoModal] = useState(false)
     const [modalNeeded, setModalNeeded] = useState(false)
+    const [modalOnDeleteNeeded, setModalOnDeleteNeeded] = useState(false)
     const [editModal, setEditModal] = useState(false)
     const [filmInfoData, setFilmInfoData] = useState()
     const [deleted, setDeleted] = useState(false)
+    const {pathname} = useLocation()
 
     useEffect(() => {
         (async function () {
             dispatch(authOperations.getFilms())
+            localStorage.setItem('navigateTo', pathname)
         })()
     }, [deleted])
 
-    const onDeleteHandler = async e => {
+    const onDeleteHandler = () => {
+        setTimeout(() => setDeleted(!deleted), 500)
+        setModalOnDeleteNeeded(false)
+    }
+
+    const onDeleteClick = (e) => {
         e.stopPropagation()
-        dispatch(authOperations.deleteFilm(e.target.id))
-        setTimeout(() => setDeleted(!deleted), 1000)
+        setFilmInfoData(e.target.id)
+        setModalOnDeleteNeeded(true)
     }
 
     const onEditClick = e => {
@@ -44,6 +54,7 @@ function MoviesList() {
 
     const onCloseModalWindow = () => {
         setModalNeeded(false)
+        setModalOnDeleteNeeded(false)
     }
 
   return <div className={s.mainDiv}>
@@ -52,7 +63,7 @@ function MoviesList() {
       <ul className={s.list}>
           {userFilms.map(el => <li key={el.title} className={s.listItem} id={el.id} onClick={onDetailsClick}>
               <h3 id={el.id} onClick={onDetailsClick}>Title: {el.title}</h3>
-              <button type="button" id={el.id} onClick={onDeleteHandler} className={s.btn}>delete</button>
+              <button type="button" id={el.id} onClick={onDeleteClick} className={s.btn}>delete</button>
               <button type="button" id={el.id} onClick={onEditClick} className={s.btn}>edit info</button>
               </li>)
             }
@@ -60,6 +71,7 @@ function MoviesList() {
       }
       {modalNeeded && filmInfoModal && <Modal idToSearch={filmInfoData} edit={editModal} onCloseModalWindow={onCloseModalWindow}/>}
       {modalNeeded && editModal && <Modal idToSearch={filmInfoData} edit={editModal} onCloseModalWindow={onCloseModalWindow}/>}
+      {modalOnDeleteNeeded && <DeleteModal idToSearch={filmInfoData} setModalOnDeleteNeeded={setModalOnDeleteNeeded} onCloseModalWindow={onCloseModalWindow} onDeleteHandler={onDeleteHandler} />}
       </div>;
 }
 

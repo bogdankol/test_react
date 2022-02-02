@@ -1,7 +1,7 @@
 import './App.css';
 import {useEffect} from 'react';
-import {useSelector} from 'react-redux';
-import {authSelectors} from './redux/auth';
+import {useSelector, useDispatch} from 'react-redux';
+import {authOperations, authSelectors} from './redux/auth';
 import {
   Routes,
   Route,
@@ -18,13 +18,14 @@ import Specify from './components/Specify/Specify';
 function App() {
   const navigate = useNavigate();
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn)
+  const dispatch = useDispatch();
   // const getToken = useSelector(authSelectors.getToken)
 
   useEffect(() => {
-
-    if (isLoggedIn) {
-      navigate('/userPage');
-
+    dispatch(authOperations.fetchCurrentUser())
+    if (isLoggedIn && localStorage.getItem('navigateTo')) {
+      navigate(localStorage.getItem('navigateTo'));
+      console.log(localStorage.getItem('navigateTo'))
     }
   }, [isLoggedIn])
 
@@ -34,7 +35,7 @@ function App() {
     <Navigation />
     <Routes>
       <Route path="/" element={<Navigate replace to="/home" />} />
-      <Route path="/home" element={<HomePage />} />
+      <Route path="/home" element={isLoggedIn ? <Navigate replace to='/userPage' /> : <HomePage />} />
       <Route path="/userPage" element={isLoggedIn ? <UserPage /> : <Navigate replace to="/home" /> } />
       <Route path="/addMovie" element={isLoggedIn ? <AddMovie /> : <Navigate replace to="/home" />} />
       <Route path="/listOfMovies" element={isLoggedIn ? <MoviesList /> : <Navigate replace to="/home" />} />

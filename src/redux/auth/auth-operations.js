@@ -183,7 +183,10 @@ const deleteFilm = createAsyncThunk('auth/deleteFilm', async (id, thunkAPI) => {
        const {data} = await axios.get(string);
        
        if(data.status === 1) {
-        if(data.data.length === 0) return alert('no movies were found')
+        if(data.data.length === 0) {
+          alert('no movies were found')
+          return []
+        }
          if (data.data) {
            return data.data;
          };
@@ -207,6 +210,20 @@ const clearLocalData = createAsyncThunk(
   },
 );
 
+const fetchCurrentUser = createAsyncThunk(
+  'auth/fetchCurrentUser',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const savedToken = state.auth.token;
+
+    if (savedToken === null) {
+      return thunkAPI.rejectWithValue('we got no token here');
+    }
+    token.set(savedToken);
+    return true;
+  },
+);
+
 
 const authOperations = {
   registration,
@@ -217,7 +234,8 @@ const authOperations = {
   getFilm,
   patchFilm,
   getFilms,
-  searchFilms
+  searchFilms,
+  fetchCurrentUser
 };
 
 export default authOperations;

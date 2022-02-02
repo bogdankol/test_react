@@ -70,7 +70,9 @@ const authSlice = createSlice({
       {state.error = payload},
 
     [authOperations.patchFilm.fulfilled]: (state, {payload}) => {
-      state.filmInfo = {...payload}
+      if(payload) {
+        state.filmInfo = {...payload}
+      }
     },
     [authOperations.patchFilm.rejected]: (state, { payload }) =>
       {state.error = payload},
@@ -86,6 +88,12 @@ const authSlice = createSlice({
     [authOperations.clearLocalData.fulfilled]: (state, {payload}) => {
       if(payload) {
         state.foundFilms = payload
+        state.createdFilm = null
+      }
+    },
+    [authOperations.fetchCurrentUser.fulfilled]: (state, {payload}) => {
+      if(payload) {
+        state.isLoggedIn = payload
       }
     }
   },

@@ -4,6 +4,8 @@ import {authOperations} from '../../redux/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {authSelectors} from '../../redux/auth';
 import Modal from "../Modal";
+import {useLocation} from 'react-router-dom';
+
 
 function Specify() {
     const [selection, setSelection] = useState('byTitle')
@@ -14,9 +16,10 @@ function Specify() {
     const [filmInfoData, setFilmInfoData] = useState()
     const foundFilms = useSelector(authSelectors.getFoundFilms)
     const dispatch = useDispatch();
+    const {pathname} = useLocation()
 
     useEffect(() => {
-        
+        localStorage.setItem('navigateTo', pathname)
         return dispatch(authOperations.clearLocalData())
     }, [])
 

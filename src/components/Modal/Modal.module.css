@@ -82,3 +82,10 @@
     transform: scale(1);
     background: rgba(79, 197, 248, 0.363);
 }
+.select {
+    max-height: 100%;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 5px 5px;
+    font-size: 16px;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import s from "./Modal.module.css";
 import { createPortal } from "react-dom";
 import {authOperations} from '../../redux/auth';
@@ -12,6 +12,12 @@ function Modal({ idToSearch, onCloseModalWindow, edit }) {
   const [newYear, setNewYear] = useState('')
   const [newFormat, setNewFormat] = useState('')
   const [newActors, setNewActors] = useState('')
+
+  const newTitleRef = useRef(null)
+  const newYearRef = useRef(null)
+  const newFormatRef = useRef(null)
+  const newActorsRef = useRef(null)
+
   const filmInfo = useSelector(authSelectors.getOneFilm)
   const dispatch = useDispatch();
   useEffect(() => {
@@ -41,8 +47,8 @@ function Modal({ idToSearch, onCloseModalWindow, edit }) {
            return setNewTitle(e.target.value)
         case 'newYear':
             return setNewYear(e.target.value)
-        case 'newFormat':
-            return setNewFormat(e.target.value)
+        // case 'newFormat':
+        //     return setNewFormat(e.target.value)
         case 'newActors':
             return setNewActors(e.target.value)              
         default: 
@@ -50,14 +56,37 @@ function Modal({ idToSearch, onCloseModalWindow, edit }) {
     }
 }
 
+const validationNewData = (data, refs) => {
+  console.log(data);
+  if(data.title && data.title === 0) {
+    alert('title field is empty')
+    return refs.newTitleRef.current.focus()
+  }
+  if(data.title && data.title.length < 2) {
+    alert('title is too short')
+    return refs.newTitleRef.current.focus()
+    }
+  if(data.year && isNaN(data.year)) {
+    alert('year field is empty or year is not a number')
+    return refs.newYearRef.current.focus()
+    }
+  if(data.actors && data.actors[0].length === 0) {
+    alert('A movie should contain at least one actor')
+    return refs.newActorsRef.current.focus()
+  }
+  return true
+}
+
 const onNewSubmitHandler = async e => {
   e.preventDefault()
   const dataToPatch = {}
   if(newTitle) dataToPatch.title = newTitle;
   if(newYear) dataToPatch.year = newYear;
-  if(newFormat && newFormat === "dvd" || newFormat === "VHS" || newFormat === "vhs" || newFormat === "DVD") dataToPatch.format = newFormat.toUpperCase();
+  if(newFormat) dataToPatch.format = newFormat;
   if(newActors)  dataToPatch.actors = newActors.trim().split(',');
 
+  const permission = validationNewData(dataToPatch, {newTitleRef, newYearRef, newActorsRef})
+  if(!permission) return
   dispatch(authOperations.patchFilm({id: idToSearch, dataToPatch}))
 }
 
@@ -100,13 +129,18 @@ const onNewSubmitHandler = async e => {
        Edit movie's info
         <form onSubmit={onNewSubmitHandler} className={s.form}>
             Title
-            <input value={newTitle} onChange={newChangeHandler} name="newTitle"></input>
+            <input value={newTitle} ref={newTitleRef} onChange={newChangeHandler} name="newTitle"></input>
             year
-            <input value={newYear} onChange={newChangeHandler} name="newYear"></input>
+            <input value={newYear} ref={newYearRef} onChange={newChangeHandler} name="newYear"></input>
             format 
-            <input value={newFormat} onChange={newChangeHandler} name="newFormat"></input>
+            <select defaultValue="" onChange={(e) => {setNewFormat(e.target.value)}} className={s.select}>
+            <option value="">don't change</option>
+              <option value="DVD">DVD</option>
+              <option value="VHS">VHS</option>
+              <option value="Blu-Ray">Blu-Ray</option>
+          </select>
             actors
-            <input value={newActors} onChange={newChangeHandler} name="newActors"></input>
+            <input value={newActors} ref={newActorsRef} onChange={newChangeHandler} name="newActors"></input>
             <button type="submit" className={s.btn}>patch film</button>
         </form>
        </div>

@@ -4,25 +4,44 @@ import {authOperations} from '../../redux/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {authSelectors} from '../../redux/auth';
 import s from './AddMovie.module.css';
+import {useLocation} from 'react-router-dom';
 
 function AddMovie() {
   const [title, setTitle] = useState('')
   const [year, setYear] = useState('')
-  const [format, setFormat] = useState('')
+  const [format, setFormat] = useState('Blu-Ray')
   const [actors, setActors] = useState('')
   const dispatch = useDispatch();
   const createdFilm = useSelector(authSelectors.getCreatedFilm)
+  const {pathname} = useLocation()
 
   const titleRef = useRef(null)
   const yearRef = useRef(null)
   const formatRef = useRef(null)
   const actorsRef = useRef(null)
+  // console.log('axios.defaults.headers.common.Authorization:', axios.defaults.headers.common.Authorization);
+
+  useEffect(() => {
+    localStorage.setItem('navigateTo', pathname)
+  })
 
   const validationData = (data, refs) => {
-    if(!data.title) return refs.titleRef.current.focus()
-    if(!data.year || isNaN(data.year)) return refs.yearRef.current.focus()
-    if(!data.format) return refs.formatRef.current.focus()
-    if(data.actors.length === 0) return refs.actorsRef.current.focus()
+    if(!data.title) {
+      alert('title field is empty')
+      return refs.titleRef.current.focus()
+    }
+    if(data.title.length < 2) {
+      alert('title is too short')
+      return refs.titleRef.current.focus()
+      }
+    if(!data.year || isNaN(data.year)) {
+      alert('year field is empty or year is not a number')
+      return refs.yearRef.current.focus()
+      }
+    if(data.actors.length === 0 || data.actors[0].length === 0) {
+      alert('A movie should containt at least one actor')
+      return refs.actorsRef.current.focus()
+    }
     return true
   }
 
@@ -32,8 +51,6 @@ function AddMovie() {
           return setTitle(e.target.value)
         case 'year':
             return setYear(e.target.value)
-        case 'format':
-            return setFormat(e.target.value)
         case 'actors':
             return setActors(e.target.value)              
         default: 
@@ -44,7 +61,7 @@ function AddMovie() {
   const onSubmitHandler = async e => {
     e.preventDefault()
     const data = {
-        title, year, format: format.toUpperCase(), actors: actors.trim().split(',')
+        title, year, format, actors: actors.trim().split(',')
     }
     const result = validationData(data, {titleRef, yearRef, formatRef, actorsRef})
     if(!result) return
@@ -59,7 +76,11 @@ function AddMovie() {
         year
         <input ref={yearRef} name="year" value={year} onChange={onChangeHandler}></input>
         format
-        <input ref={formatRef} name="format" value={format} onChange={onChangeHandler}></input>
+        <select defaultValue="Blu-Ray" onChange={(e) => {setFormat(e.target.value)}} className={s.select}>
+          <option value="DVD">DVD</option>
+          <option value="VHS">VHS</option>
+          <option value="Blu-Ray">Blu-Ray</option>
+        </select>
         actors
         <input ref={actorsRef} name="actors" value={actors} onChange={onChangeHandler}></input>
         <button type="submit" className={s.btn}>create</button>

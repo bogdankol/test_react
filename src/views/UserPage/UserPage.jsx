@@ -1,10 +1,16 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios';
 import {authOperations} from '../../redux/auth';
 import {useDispatch} from 'react-redux';
 import s from './UserPage.module.css';
+import {useLocation} from 'react-router-dom';
 
 function UserPage() {
+    const {pathname} = useLocation()
+
+    useEffect(() => {
+        localStorage.setItem('navigateTo', pathname)
+      })
     // const [file, setFile] = useState(null);
 
     // const onFileSubmit = async e => {

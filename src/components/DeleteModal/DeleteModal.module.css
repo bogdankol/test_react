@@ -1,0 +1,39 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 20;
+}
+.modal {
+    width: 500px;
+    padding: 15px 25px;
+    box-sizing: border-box;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.btnDiv {
+    display: flex;
+    width: 100px;
+    justify-content: space-between;
+}
+.btn {
+    padding: 15px 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    transform: scale(0.9);
+    transition: transform 250ms linear;
+}
+.btn:hover,
+.btn:focus {
+    transform: scale(1);
+    background: rgba(79, 197, 248, 0.363);
+}
